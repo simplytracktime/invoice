@@ -20,5 +20,7 @@ func main() {
 	r.GET("/customers", controllers.FindCustomers)
 	r.POST("/customers", controllers.CreateCustomer)
 
+	r.DELETE("/customers/:id", controllers.DeleteCustomer)
+
 	r.Run()
 }

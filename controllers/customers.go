@@ -53,3 +53,19 @@ func CreateCustomer(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": customer})
 }
+
+// DeleteCustomer a customer
+func DeleteCustomer(c *gin.Context) {
+	db := c.MustGet("db").(*gorm.DB)
+
+	// Validate input
+	var customer models.Customer
+	if err := db.Where("id = ?", c.Param("id")).First(&customer).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+
+	db.Delete(&customer)
+
+	c.JSON(http.StatusOK, gin.H{"data": true})
+}
